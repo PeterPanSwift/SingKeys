@@ -45,9 +45,18 @@ SingKeys is a static web app that listens to a song, isolates the lead vocal, tr
 - 🎧 **Four playback modes**: Piano · Original · Vocals · Mix (original + piano).
 - 🐢 **Speed control**: 0.5×–1.25× with pitch preservation for audio tracks.
 - 🎚️ **Range presets**: Voice (C3–C6), Low voice (C2–C5), Wide (A2–C7).
+- 📜 **Reference scores**: staff notation and numbered notation (jianpu) generated from the detected notes, quantized to 4/4 on a sixteenth-note grid with adjustable BPM. Jianpu tonic is selectable, pages follow playback, and clicking a note seeks to it.
 - 💾 **MIDI export**: detected notes as MIDI format 0 (480 PPQ, 120 BPM).
 - 🔒 **Private by design**: no server and no uploads. The model is downloaded once, verified by SHA-256, and cached.
 - 🎵 **Built-in demo**: a pre-analyzed sample song, [*把心留在冰島* (Leave My Heart in Iceland)](https://suno.com/s/uWYROXRsCZYQlM9w), so you can try it immediately.
+
+### 📜 Melody Score
+
+| 🎼 Staff notation | 🔢 Numbered notation (jianpu) |
+| :---: | :---: |
+| <img src="docs/score-staff.webp" alt="Staff notation" width="440"> | <img src="docs/score-jianpu.webp" alt="Numbered notation" width="440"> |
+
+> Scores are references generated from the detected melody, not the official sheet music of the song.
 
 ### 🚀 Quick Start
 
@@ -101,6 +110,7 @@ See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed technical notes.
 
 - [ONNX Runtime Web](https://github.com/microsoft/onnxruntime) (MIT)
 - [web-audio-separation](https://www.npmjs.com/package/web-audio-separation) (MIT)
+- [abcjs](https://github.com/paulrosen/abcjs) (MIT) for staff notation rendering
 - Kim Vocal 2 model from [Politrees/UVR_resources](https://huggingface.co/Politrees/UVR_resources) (MIT)
 - Demo song [*把心留在冰島*](https://suno.com/s/uWYROXRsCZYQlM9w) by b612peterpan, made with Suno
 
@@ -126,9 +136,18 @@ SingKeys 是一個純前端的網頁工具：匯入一首歌，它會分離出�
 - 🎧 **四種播放模式**：鋼琴 · 原曲 · 人聲 · 合奏（原曲＋鋼琴）。
 - 🐢 **變速播放**：0.5×–1.25×，音訊軌保持原音高。
 - 🎚️ **音域預設**：一般歌聲（C3–C6）、低音歌聲（C2–C5）、寬音域（A2–C7）。
+- 📜 **旋律樂譜**：依辨識結果生成五線譜與簡譜，以 4/4 拍、十六分音符整理節奏，記譜 BPM 可調、簡譜主音可選，跟隨播放自動翻頁，點選音符即可跳到該處播放。
 - 💾 **匯出 MIDI**：辨識出的音符可輸出為 MIDI format 0（480 PPQ、120 BPM）。
 - 🔒 **重視隱私**：沒有伺服器、不上傳檔案。模型只下載一次，經 SHA-256 驗證後快取。
 - 🎵 **內建範例歌曲**：[《把心留在冰島》](https://suno.com/s/uWYROXRsCZYQlM9w)已預先分析完成，打開就能試玩。
+
+### 📜 旋律樂譜
+
+| 🎼 五線譜 | 🔢 簡譜 |
+| :---: | :---: |
+| <img src="docs/score-staff.webp" alt="五線譜" width="440"> | <img src="docs/score-jianpu.webp" alt="簡譜" width="440"> |
+
+> 樂譜為依辨識結果生成的參考譜，並非原曲正式曲譜。
 
 ### 🚀 快速開始
 
@@ -182,6 +201,7 @@ licenses/   第三方授權條款
 
 - [ONNX Runtime Web](https://github.com/microsoft/onnxruntime)（MIT）
 - [web-audio-separation](https://www.npmjs.com/package/web-audio-separation)（MIT）
+- [abcjs](https://github.com/paulrosen/abcjs)（MIT），用於繪製五線譜
 - Kim Vocal 2 模型來自 [Politrees/UVR_resources](https://huggingface.co/Politrees/UVR_resources)（MIT）
 - 範例歌曲[《把心留在冰島》](https://suno.com/s/uWYROXRsCZYQlM9w)：b612peterpan 以 Suno 創作
 
