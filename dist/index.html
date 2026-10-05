@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#121217"><meta name="description" content="把歌聲化為鋼琴旋律。匯入音樂、辨識音高，跟著音符瀑布與琴鍵動畫一起彈奏。">
+<title>SingKeys — 把歌聲化為琴聲</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ccff8a'/%3E%3Cpath d='M8 9v15m8-15v15m8-15v15' stroke='%23121217' stroke-width='4'/%3E%3Cpath d='M12 8v9m8-9v9' stroke='%23ccff8a' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./style.css"><script type="module" src="./app.js"></script>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="./" aria-label="SingKeys 首頁"><span class="brand-mark"><i></i><i></i><i></i><i></i></span>SingKeys<span class="brand-tag">MELODY STUDIO</span></a><span class="local-badge"><span>◈</span> 音訊在你的瀏覽器中處理</span></header>
+<main>
+<div class="page-heading"><div><div class="eyebrow">FROM VOICE TO PIANO</div><h1>把歌聲，化為琴聲<span>。</span></h1></div><span class="workspace-label">你的旋律工作室 <span> / 01</span></span></div>
+<div class="studio">
+<aside class="sidebar">
+<section class="source-panel"><div class="section-heading"><h2>歌曲來源</h2><span class="step">01</span></div>
+<label class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="選擇音訊檔案"><input type="file" id="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.flac" hidden><span class="upload-icon">＋</span><strong>放入一首你喜歡的歌</strong><span>拖曳檔案，或點擊選擇</span><small>MP3 · WAV · M4A · 最長 10 分鐘 / 50 MB</small></label>
+<div class="or"><span></span>或使用範例歌曲<span></span></div>
+<button class="demo-card" id="demo"><span class="album-art" aria-hidden="true">♫</span><span><strong>把心留在冰島</strong><small>提供的範例歌曲 · 1:32</small></span><span class="demo-play">▷</span></button>
+<div class="selected-file" id="selectedFile" hidden><span class="file-dot"></span><div><strong id="fileName"></strong><small id="fileInfo"></small></div></div>
+<div class="analysis-options"><label for="range">辨識音域</label><select id="range"><option value="voice">一般歌聲 · C3–C6</option><option value="low">低音歌聲 · C2–C5</option><option value="wide">寬音域 · A2–C7</option></select></div>
+<button id="analyze" class="primary" disabled><span>✧</span> 辨識旋律</button>
+<div id="analysisProgress" class="analysis-progress" hidden><progress id="progress" max="100" value="0"></progress><div><span id="progressText">正在準備音訊…</span><button id="cancel" class="text-button">取消</button></div></div>
+<p class="status" id="status" role="status" aria-live="polite">選擇歌曲，開始尋找旋律。</p>
+</section>
+<section class="result-panel"><div class="section-heading"><h2>旋律解析</h2><span class="step">02</span></div><div class="stats"><div><small>辨識音符</small><strong id="noteCount">—</strong></div><div><small>旋律音域</small><strong id="pitchRange">—</strong></div></div><div class="analysis-note"><span>ⓘ</span><p>辨識的是單音主旋律。清唱最準確；完整歌曲的伴奏可能影響結果，尚未進行人聲分離。</p></div><button class="outline" id="export" disabled>↓ 匯出 MIDI 旋律</button></section>
+<div class="sidebar-foot"><span>♫</span> 每一段旋律，都有它的形狀。</div>
+</aside>
+<section class="instrument">
+<div class="instrument-heading"><div><span class="eyebrow">PIANO PLAYER</span><h2 id="trackTitle">等待你的第一段旋律</h2></div><span class="ready-badge" id="readyBadge">尚未分析</span></div>
+<div class="waveform-wrap"><canvas id="waveform" aria-label="歌曲波形與播放位置"></canvas><div class="waveform-empty" id="waveEmpty">匯入歌曲後，波形將顯示於此</div></div>
+<div class="transport"><div class="transport-main"><button class="icon-button" id="restart" disabled aria-label="回到開頭">↺</button><button class="play-button" id="play" disabled aria-label="播放鋼琴旋律">▶</button><div class="time"><span id="currentTime">0:00</span><span> / </span><span id="duration">0:00</span></div></div><div class="transport-options"><label class="speed-label" for="speed">速度<select id="speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1.0×</option><option value="1.25">1.25×</option></select></label><fieldset class="mode-switch"><legend class="sr-only">播放模式</legend><button data-mode="piano" class="active" aria-pressed="true">鋼琴</button><button data-mode="original" aria-pressed="false">原曲</button><button data-mode="both" aria-pressed="false">合奏</button></fieldset></div></div>
+<input type="range" id="seek" class="seek" min="0" max="100" value="0" step="0.01" aria-label="播放進度" disabled>
+<div class="visualizer-toolbar"><span><i class="legend-dot"></i> 旋律音符 <span class="muted">/ 下落至琴鍵時彈奏</span></span><span class="note-readout" id="currentNote">—</span></div>
+<div class="piano-scroll" id="pianoScroll"><div class="piano-surface"><div class="roll-container"><canvas id="roll" aria-label="同步音符瀑布"></canvas><div class="roll-empty" id="rollEmpty"><span class="empty-notes">♩ ♪ ♫</span><h3>看見旋律的流動</h3><p>辨識完成後，按下播放<br>音符會沿著琴鍵緩緩落下</p></div><div class="strike-line"></div></div><div class="keyboard" id="keyboard" role="group" aria-label="可點擊彈奏的鋼琴鍵盤"></div></div></div>
+<div class="piano-footer"><span>點擊琴鍵，也能自由彈奏</span><label for="volume">音量 <input id="volume" type="range" min="0" max="1" step="0.01" value="0.65"></label></div>
+</section>
+</div>
+<footer><span>SingKeys <span class="muted">/ 聲音與指尖之間</span></span><span>單音旋律辨識 · 瀏覽器鋼琴合成</span></footer>
+</main>
+</body></html>
