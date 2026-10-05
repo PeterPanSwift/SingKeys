@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "abcjs": "6.7.1",
     "onnxruntime-web": "1.30.0",
     "web-audio-separation": "0.3.1"
   },
@@ -11,6 +12,6 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node tests/audio.test.mjs && node tests/vocal-pitch.test.mjs && node tests/separation.test.mjs"
+    "test": "node tests/audio.test.mjs && node tests/vocal-pitch.test.mjs && node tests/separation.test.mjs && node tests/score.test.mjs"
   }
 }

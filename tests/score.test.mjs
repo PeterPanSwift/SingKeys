@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {makeScore,numberedPitch,abcPitch,pageABC} from '../dist/score-model.js';
+const score=makeScore([{midi:60,start:.5,end:3},{midi:61,start:3.5,end:3.75}],120);
+assert.equal(score.events[0].midi,null);assert.equal(score.events[0].length,4);
+for(let b=0;b<score.bars;b++)assert.equal(score.events.filter(e=>e.bar===b).reduce((n,e)=>n+e.length,0),16,'Every measure balances including rests');
+assert(score.events.some(e=>e.tieOut));assert(score.events.some(e=>e.tieIn));
+assert.deepEqual(numberedPitch(59),{number:'7',octave:-1});assert.deepEqual(numberedPitch(72),{number:'1',octave:1});assert.deepEqual(numberedPitch(61),{number:'♯1',octave:0});assert.deepEqual(numberedPitch(62,2),{number:'1',octave:0});
+assert.equal(abcPitch(48),'=C,');assert.equal(abcPitch(72),'=c');assert.equal(abcPitch(84),"=c'");assert.equal(abcPitch(61),'^C');
+const abc=pageABC(score.events,120);assert.equal(abc.spans.length,score.events.length);assert(abc.abc.includes('^C'));assert(abc.abc.includes('-'));
+assert.equal(makeScore([]).bars,0);assert(makeScore([{midi:60,start:0,end:1}],60).events.filter(e=>e.midi===60).reduce((n,e)=>n+e.length,0)===4);
+console.log('PASS: complete measures, silence, ties across bars, tempo scaling, accidentals, octave dots and ABC mapping.');

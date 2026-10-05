@@ -1,6 +1,7 @@
 import {encodeMidi} from './midi.js';
 import {analyzeSong} from './pipeline.js';
 import {wavBytes} from './audio-utils.js';
+import {createScore} from './score.js';
 const $=selector=>document.querySelector(selector);
 const noteName=m=>['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'][m%12]+(Math.floor(m/12)-1);
 const formatTime=s=>`${Math.floor(Math.max(0,s)/60)}:${String(Math.floor(Math.max(0,s)%60)).padStart(2,'0')}`;
@@ -97,7 +98,7 @@ async function play(){
 function seek(time){const resume=state.playing;pause();state.position=Math.max(0,Math.min(state.duration,time));if(resume)void play();}
 function setMode(mode){if(mode==='vocals'&&!vocalMedia)return;const resume=state.playing;pause();state.mode=mode;document.querySelectorAll('[data-mode]').forEach(b=>{b.classList.toggle('active',b.dataset.mode===mode);b.setAttribute('aria-pressed',String(b.dataset.mode===mode));});if(resume)void play();controls();}
 function setNotes(notes){
-  state.notes=notes;$('#noteCount').textContent=notes.length.toLocaleString();
+  state.notes=notes;score.setNotes(notes);$('#noteCount').textContent=notes.length.toLocaleString();
   if(notes.length){const pitches=notes.map(n=>n.midi),lo=Math.min(...pitches),hi=Math.max(...pitches);$('#pitchRange').textContent=`${noteName(lo)}–${noteName(hi)}`;state.min=Math.min(48,Math.floor(lo/12)*12);state.max=Math.max(84,Math.ceil(hi/12)*12);}
   else{$('#pitchRange').textContent='—';state.min=48;state.max=84;}
   $('#rollEmpty').hidden=notes.length>0;buildKeyboard();controls();
@@ -190,6 +191,7 @@ async function analyze(){
 function canvasSize(canvas){const rect=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);if(canvas.width!==Math.round(rect.width*dpr)||canvas.height!==Math.round(rect.height*dpr)){canvas.width=Math.round(rect.width*dpr);canvas.height=Math.round(rect.height*dpr);}const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);return {ctx,width:rect.width,height:rect.height};}
 function draw(){
   const time=position();if(state.playing&&time>=state.duration){pause();state.position=state.duration;}
+  score.update(time,state.playing);
   $('#currentTime').textContent=formatTime(time);$('#seek').value=time;
   const {ctx:w,width:ww,height:wh}=canvasSize($('#waveform'));w.clearRect(0,0,ww,wh);
   if(state.wave.length){const count=Math.floor(ww/4);for(let i=0;i<count;i++){const value=state.wave[Math.floor(i/count*state.wave.length)]||0,h=Math.max(2,value*(wh-16));w.fillStyle=i/count<time/state.duration?'#c5b0f5':'#665680';w.fillRect(i*4,(wh-h)/2,2,h);}w.fillStyle='#d7ffa7';w.fillRect(ww*time/state.duration,5,1,wh-10);}
@@ -227,6 +229,7 @@ $('#export').addEventListener('click',()=>{if(!state.notes.length)return;const u
 document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT','BUTTON','LABEL'].includes(e.target.tagName)){e.preventDefault();state.playing?pause():void play();}});
 $('#sourceType').addEventListener('change',()=>{pause();clearVocals();state.result=null;setNotes([]);$('#analysisSummary').hidden=true;document.querySelectorAll('.pipeline-step').forEach(el=>el.classList.remove('done','current'));if(state.mode==='vocals')setMode('original');controls();status('來源類型已變更，請重新分析。');});
 window.addEventListener('pagehide',()=>{pause();state.controller?.abort();state.worker?.terminate();});
+const score=createScore($('#scorePanel'),time=>{if(!state.busy)seek(Math.min(state.duration,time));});
 buildKeyboard();draw();
 void loadDemo();
 if(document.modelContext?.registerTool){

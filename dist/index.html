@@ -36,6 +36,14 @@
 <div class="visualizer-toolbar"><span><i class="legend-dot"></i> 旋律音符 <span class="muted">/ 下落至琴鍵時彈奏</span></span><span class="note-readout" id="currentNote">—</span></div>
 <div class="piano-scroll" id="pianoScroll"><div class="piano-surface"><div class="roll-container"><canvas id="roll" aria-label="同步音符瀑布"></canvas><div class="roll-empty" id="rollEmpty"><span class="empty-notes">♩ ♪ ♫</span><h3>看見旋律的流動</h3><p>辨識完成後，按下播放<br>音符會沿著琴鍵緩緩落下</p></div><div class="strike-line"></div></div><div class="keyboard" id="keyboard" role="group" aria-label="可點擊彈奏的鋼琴鍵盤"></div></div></div>
 <div class="piano-footer"><span>點擊琴鍵，也能自由彈奏</span><label for="volume">音量 <input id="volume" type="range" min="0" max="1" step="0.01" value="0.65"></label></div>
+<section class="score-panel" id="scorePanel" aria-label="旋律樂譜">
+<div class="score-heading"><h3>旋律樂譜</h3><div class="score-tabs" role="tablist" aria-label="樂譜格式"><button id="staffTab" data-score-view="staff" role="tab" aria-controls="staffScore" aria-selected="true" class="active">五線譜</button><button id="numberTab" data-score-view="number" role="tab" aria-controls="numberScore" aria-selected="false">簡譜</button></div></div>
+<div class="score-settings"><label>記譜速度 <input id="scoreBpm" type="number" value="120" min="40" max="240" step="1" aria-label="記譜速度 BPM"> BPM</label><label id="tonicControl" hidden>簡譜 1 = <select id="scoreTonic" aria-label="簡譜主音"><option value="0">C</option><option value="1">C♯</option><option value="2">D</option><option value="3">E♭</option><option value="4">E</option><option value="5">F</option><option value="6">F♯</option><option value="7">G</option><option value="8">A♭</option><option value="9">A</option><option value="10">B♭</option><option value="11">B</option></select></label><label class="follow-label"><input type="checkbox" id="scoreFollow" checked> 跟隨播放翻頁</label></div>
+<p class="score-help">依辨識結果生成參考譜，以 4/4 拍、十六分音符整理節奏，非原曲正式曲譜。BPM 僅調整記譜；五線譜採 C 調記譜，簡譜主音可調，不改變播放音高。</p>
+<div id="scoreEmpty" class="score-empty">辨識完成後，這裡會顯示旋律樂譜。</div>
+<div id="scoreBody" hidden><div class="score-paper"><div id="staffScore" role="tabpanel" aria-labelledby="staffTab"></div><div id="numberScore" role="tabpanel" aria-labelledby="numberTab" hidden></div></div><p class="score-legend">點選音符可移動播放位置。簡譜：0 為休止，上下點表示八度，右側點延長半個原音值，底線表示短音，— 表示延長一拍，⌒ 表示延音。窄螢幕可左右滑動樂譜。</p></div>
+<div class="score-pagination"><button id="scorePrev" aria-label="上一頁樂譜">上一頁</button><span id="scorePage" aria-live="polite">尚無樂譜</span><button id="scoreNext" aria-label="下一頁樂譜">下一頁</button></div>
+</section>
 </section>
 </div>
 <footer><span>SingKeys <span class="muted">/ 聲音與指尖之間</span></span><span>人聲分離 · 旋律追蹤 · 鋼琴合成</span></footer>
