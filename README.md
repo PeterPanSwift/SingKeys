@@ -7,7 +7,7 @@
 **Turn a singing voice into piano melody — right in your browser.**
 **把歌聲，化為琴聲 — 全程在瀏覽器裡完成。**
 
-[🇺🇸 English](#english) · [🇹🇼 繁體中文](#繁體中文)
+[🇺🇸 English](#english) · [🇹🇼 繁體中文](#zh-tw)
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES_Modules-F7DF1E?logo=javascript&logoColor=black)
 ![ONNX Runtime Web](https://img.shields.io/badge/ONNX_Runtime_Web-1.30.0-005CED?logo=onnx&logoColor=white)
@@ -27,7 +27,7 @@
 
 ## 🇺🇸 English
 
-> 🌐 Language: **English** · [繁體中文](#繁體中文)
+> 🌐 Language: **English** · [繁體中文](#zh-tw)
 
 SingKeys is a static web app that listens to a song, isolates the lead vocal, tracks its pitch, and plays it back as piano notes falling onto an on-screen keyboard. Everything runs locally in your browser, so your audio is never uploaded.
 
@@ -101,7 +101,7 @@ See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed technical notes.
 
 ---
 
-<a id="繁體中文"></a>
+<a id="zh-tw"></a>
 
 ## 🇹🇼 繁體中文
 
