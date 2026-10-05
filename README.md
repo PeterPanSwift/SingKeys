@@ -7,6 +7,10 @@
 **Turn a singing voice into piano melody — right in your browser.**
 **把歌聲，化為琴聲 — 全程在瀏覽器裡完成。**
 
+[![Live Demo](https://img.shields.io/badge/▶_Live_Demo-Try_it_now-B4F06A?style=for-the-badge)](https://singkeys-melody-studio.apppeterpan.chatgpt.site/)
+
+🌐 **https://singkeys-melody-studio.apppeterpan.chatgpt.site/**
+
 [🇺🇸 English](#english) · [🇹🇼 繁體中文](#zh-tw)
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES_Modules-F7DF1E?logo=javascript&logoColor=black)
@@ -30,6 +34,8 @@
 > 🌐 Language: **English** · [繁體中文](#zh-tw)
 
 SingKeys is a static web app that listens to a song, isolates the lead vocal, tracks its pitch, and plays it back as piano notes falling onto an on-screen keyboard. Everything runs locally in your browser, so your audio is never uploaded.
+
+🎮 **Try it online:** <https://singkeys-melody-studio.apppeterpan.chatgpt.site/>
 
 ### ✨ Features
 
@@ -108,6 +114,8 @@ See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed technical notes.
 > 🌐 語言：[English](#english) · **繁體中文**
 
 SingKeys 是一個純前端的網頁工具：匯入一首歌，它會分離出主唱人聲、追蹤音高，再把旋律變成落在琴鍵上的鋼琴音符。所有運算都在瀏覽器本機完成，歌曲不會上傳。
+
+🎮 **線上試玩：** <https://singkeys-melody-studio.apppeterpan.chatgpt.site/>
 
 ### ✨ 功能特色
 
