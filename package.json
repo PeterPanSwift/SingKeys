@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "onnxruntime-web": "1.30.0",
+    "web-audio-separation": "0.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "onnxruntime-node": "1.30.0"
+  },
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node tests/audio.test.mjs && node tests/vocal-pitch.test.mjs && node tests/separation.test.mjs"
+  }
+}
